@@ -2,13 +2,11 @@ const router = require('express').Router();
 const sequelize = require('../config/connection');
 const { Post, User, Comment } = require('../models');
 
-
+//main page w/posts
 router.get('/', (req, res) => {
 
     Post.findAll({
-        attributes: ['id', 'post_text', 'title', 'created_at',
-            [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
-        ],
+        attributes: ['id', 'post_text', 'title', 'created_at'],
         order: [['created_at', 'DESC']],
         include: [
             {
@@ -22,7 +20,7 @@ router.get('/', (req, res) => {
             {
                 model: User,
                 attributes: ['username']
-            }  
+            }
         ]
     })
         .then(dbPostData => {
@@ -30,12 +28,11 @@ router.get('/', (req, res) => {
             res.render('homepage', { posts, loggedIn: req.session.loggedIn });
         })
         .catch(err => {
-            console.log(err);
             res.status(500).json(err);
         })
 });
 
-
+//login page
 router.get('/login', (req, res) => {
     if (req.session.loggedIn) {
         res.redirect('/');
@@ -45,8 +42,8 @@ router.get('/login', (req, res) => {
     res.render('login')
 });
 
-
-router.get('/logout', (req, res) => {
+//logout button actions
+router.post('/api/users/logout', (req, res) => {
     if (req.session.loggedIn) {
         req.session.destroy(() => {
             res.status(204).end();
@@ -56,13 +53,11 @@ router.get('/logout', (req, res) => {
     }
 });
 
-
+//page for a single post
 router.get('/post/:id', (req, res) => {
     const post = Post.findOne({
         where: { id: req.params.id },
-        attributes: ['id', 'post_text', 'title', 'created_at',
-            [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
-        ],
+        attributes: ['id', 'post_text', 'title', 'created_at'],
         order: [['created_at', 'DESC']],
         include: [
             {
@@ -88,7 +83,6 @@ router.get('/post/:id', (req, res) => {
             res.render('single-post', { post, loggedIn: req.session.loggedIn });
         })
         .catch(err => {
-            console.log(err);
             res.status(500).json(err);
         })
 });

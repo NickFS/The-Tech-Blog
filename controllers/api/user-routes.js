@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Post, Vote, Comment } = require('../../models');
+const { User, Post, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 router.get('/', (req, res) => {
@@ -8,7 +8,6 @@ router.get('/', (req, res) => {
     })
         .then(dbUserData => res.json(dbUserData))
         .catch(err => {
-            console.log(err);
             res.status(500).json(err);
         });
 });
@@ -24,7 +23,7 @@ router.get('/:id', (req, res) => {
                 model: Post,
                 attributes: ['id', 'title', 'post_text', 'created_at']
             },
-            
+            // include the Comment model here:
             {
                 model: Comment,
                 attributes: ['id', 'comment_text', 'created_at'],
@@ -32,12 +31,6 @@ router.get('/:id', (req, res) => {
                     model: Post,
                     attributes: ['title']
                 }
-            },
-            {
-                model: Post,
-                attributes: ['title'],
-                through: Vote,
-                as: 'voted_posts'
             }
         ]
     })
@@ -49,12 +42,11 @@ router.get('/:id', (req, res) => {
             res.json(dbUserData);
         })
         .catch(err => {
-            console.log(err);
             res.status(500).json(err);
         });
 });
 
-router.post('/', withAuth, (req, res) => {
+router.post('/', (req, res) => {
     User.create({
         username: req.body.username,
         email: req.body.email,
@@ -70,12 +62,11 @@ router.post('/', withAuth, (req, res) => {
             });
         })
         .catch(err => {
-            console.log(err);
             res.status(500).json(err);
         });
 });
 
-router.post('/login', withAuth, (req, res) => {
+router.post('/login', (req, res) => {
     User.findOne({ where: { email: req.body.email } })
         .then(dbUserData => {
             if (!dbUserData) {
@@ -112,7 +103,6 @@ router.put('/:id', withAuth, (req, res) => {
             res.json(dbUserData);
         })
         .catch(err => {
-            console.log(err);
             res.status(500).json(err);
         });
 });
@@ -127,7 +117,6 @@ router.delete('/:id', withAuth, (req, res) => {
             res.json(dbUserData);
         })
         .catch(err => {
-            console.log(err);
             res.status(500).json(err);
         });
 });
