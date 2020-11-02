@@ -8,6 +8,8 @@ The challenge this week was to build a CMS-style blog site similar to a Wordpres
 ## Application
 https://thetechblog.herokuapp.com/
 
+![my screenshot](https://github.com/NickFS/The-Tech-Blog/blob/main/blog-image.PNG)
+
 ## Languages
   * Javascript
   * CSS
