@@ -5,6 +5,9 @@ The challenge this week was to build a CMS-style blog site similar to a Wordpres
 ## Contributor
   Nick Foster
 
+## Application
+https://thetechblog.herokuapp.com/
+
 ## Languages
   * Javascript
   * CSS
@@ -18,4 +21,4 @@ The challenge this week was to build a CMS-style blog site similar to a Wordpres
     * mysql2
     * Express-Handlebars
     
-    Site: https://thetechblog.herokuapp.com/
+    
