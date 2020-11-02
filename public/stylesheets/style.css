@@ -26,7 +26,7 @@ header {
 
 .header-container nav a {
     text-decoration: none;
-    color: #65686e;
+    color: #000;
     font-weight: bold;
 }
 
@@ -42,7 +42,7 @@ header {
 }
 
 .title {
-    background-color: #4169e1;
+    background-color: #ffffff;
     color: #4169e1;
     border-radius: 3px;
     padding: 10px;
@@ -162,7 +162,7 @@ label {
 
 .header-container nav a:hover, .header-container nav button:hover, #create-post-btn:hover {
     color: #4169e1;
-    background-color: #65686e;
+    background-color: #000;
     transition: all .5s;
     border: white 2px inset;
 }
